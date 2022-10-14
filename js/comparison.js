@@ -1,33 +1,43 @@
 function initComparisons() {
-  var x, i;
+  cleaningHTML();
+  var overlayImg, i;
   /*find all elements with an "overlay" class:*/
-  x = document.getElementsByClassName("img-comp-overlay");
-  for (i = 0; i < x.length; i++) {
+  overlayImg = document.getElementsByClassName("img-comp-overlay");
+  for (i = 0; i < overlayImg.length; i++) {
     /*once for each "overlay" element:
     pass the "overlay" element as a parameter when executing the compareImages function:*/
-    compareImages(x[i]);
+    compareImages(overlayImg[i]);
   }
+
   function compareImages(img) {
-    cleaningHTML();
     var slider,
       img,
       clicked = 0,
       timesclicked = 0,
       w,
       h;
+
     /*get the width and height of the img element*/
-    w = img.offsetWidth;
-    h = img.offsetHeight;
+    w = img.scrollWidth;
+    h = img.scrollHeight;
+    console.log("w: " + w + " h: " + h);
+    // console.dir(img);
+
     /*set the width of the img element to 50%:*/
     img.style.width = w / 2 + "px";
+    console.log("img.style.width = " + img.style.width);
+
     /*create slider:*/
     slider = document.createElement("DIV");
-    slider.setAttribute("class", "img-comp-slider");
+    slider.setAttribute("id", "img-comp-slider");
     /*insert slider*/
     img.parentElement.insertBefore(slider, img);
+    console.dir(img.parentElement);
     /*position the slider in the middle:*/
     slider.style.top = h / 2 - slider.offsetHeight / 2 + "px";
     slider.style.left = w / 2 - slider.offsetWidth / 2 + "px";
+    console.log("slider top: " + slider.style.top + "=> " + h + " / 2" + " - " + slider.offsetHeight + " / 2");
+    console.log("slider left: " + slider.style.left + "=> " + w + " / 2" + " - " + slider.offsetWidth + " / 2");
     /*execute a function when the mouse button is pressed:*/
     slider.addEventListener("click", slideReady);
     /*and another function when the mouse button is released:*/
@@ -36,6 +46,7 @@ function initComparisons() {
     slider.addEventListener("touchstart", slideReady);
     /*and released (for touch screens:*/
     window.addEventListener("touchend", slideFinish);
+
     function slideReady(e) {
       /*prevent any other actions that may occur when moving over the image:*/
       e.preventDefault();
@@ -74,8 +85,10 @@ function initComparisons() {
       a = img.getBoundingClientRect();
       /*calculate the cursor's x coordinate, relative to the image:*/
       x = e.pageX - a.left;
+      console.log("e.pagex: " + e.pageX + " - " + "a.left: " + a.left + " = " + x);
       /*consider any page scrolling:*/
       x = x - window.pageXOffset;
+      console.log(x + " - " + window.pageXOffset + " = " + x + " final pos");
       return x;
     }
     function slide(x) {
@@ -89,11 +102,9 @@ function initComparisons() {
 
 function cleaningHTML() {
   try {
-    //$('.img-comp-slider').remove();
     console.log("cleaning...");
-    /*
-        var x = document.getElementsByClassName("img-comp-slider");
-        x.remove();
-        */
+
+    var x = document.querySelector("#img-comp-slider");
+    x.remove();
   } catch (err) {}
 }

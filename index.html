@@ -14,26 +14,40 @@
 <body>
 
   <h1>Compare Two Images</h1>
-  <div>
 
-    <p>Select your files:</p>
-    Before:
-    <input type="file" accept="image/*" name="before" id="file" onchange="loadFileBefore(event)">
-    After:
-    <input type="file" accept="image/*" name="after" id="file" onchange="loadFileAfter(event)">
+  <!-- TODO add better styling to the buttons  -->
+  <div class="action-buttons">
     <button onclick="initComparisons()">Compare</button>
     <button onclick="reset()">Reset</button>
   </div>
 
-  
-  <p>Paste your image here…</p>
+<!-- TODO add an "hidden" upload area to the before and after image so we can click on the image to upload a new one instead. would be more convenient than reaching the initial upload area that is loaded when there are no comparison  -->
+  <div class="files-upload">
+
+    <!-- Before area -->
+    <div class="file-drop-area">
+      <h3>Before</h3>
+      <span class="fake-btn">Choose the first image to compare</span>
+      <span class="file-msg">or drag and drop files here</span>
+      <input class="file-input" type="file" accept="image/*" name="before" id="file" onchange="loadFileBefore(event)">
+      <span id="pasteContainerBefore" class="pasteContainer" contenteditable="true"></span>
+    </div>
+    <!-- end Before area -->
+
+
+    
+    <!-- After area -->
+    <div class="file-drop-area">
+      <h3>After</h3>
+      <span class="fake-btn">Choose the second image to compare</span>
+      <span class="file-msg">or drag and drop files here</span>
+      <input class="file-input" type="file" accept="image/*" name="after" id="file" onchange="loadFileAfter(event)">
+      <span id="pasteContainerAfter" class="pasteContainer" contenteditable="true"></span>
+    </div>
+    <!-- end After area -->
+  </div>
 
   <!-- source : https://www.techiedelight.com/paste-image-from-clipboard-using-javascript/ -->
-
-  <span id="pasteContainerBefore" class="pasteContainer" contenteditable="true"></span>
-  <span id="pasteContainerAfter" class="pasteContainer" contenteditable="true"></span>
-
-
   <p>Click and slide the blue slider to compare two images: BEFORE on the left side, AFTER on the right side</p>
 
   <div class="img-comp-container">
